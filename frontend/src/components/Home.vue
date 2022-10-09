@@ -7,12 +7,17 @@ export default defineComponent({
   name: "Home",
   setup() {
     const person = ref([]);
+    const addField = ref(false);
+    const name = ref("");
+    const age = ref("");
+
     const fetchPeople = async () => {
       const response = await api.get("/person");
       person.value = response.data;
     };
+
     onMounted(fetchPeople);
-    return { person };
+    return { person, addField, name, age };
   },
   components: {
     Person,
@@ -23,6 +28,21 @@ export default defineComponent({
         const person = this.person.filter((person) => person._id !== id);
         this.person = person;
       });
+    },
+    handleClickAddButton() {
+      this.addField = this.addField ? false : true;
+    },
+    async handleClickAddPerson() {
+     const response = await api
+        .post("/person", {
+          name: this.name,
+          age: this.age,
+        })
+
+      this.person.push(response.data);
+      this.addField = false;
+      this.name = "";
+      this.age = "";
     },
   },
 });
@@ -36,9 +56,27 @@ export default defineComponent({
     color="green"
     height="28"
     width="28"
+    @click="handleClickAddButton"
     >
     <v-icon size="small">mdi-plus</v-icon>
   </v-btn>
+  </div>
+
+  <div v-if="addField === true" class="form-new-user">
+    <label>Name</label>
+    <input type="text" v-model="name" />
+    <label>Age</label>
+    <input type="number" v-model="age" />
+
+    <v-btn
+    icon
+    color="blue"
+    height="28"
+    width="28"
+    @click="handleClickAddPerson"
+    >
+      <v-icon size="small">mdi-check</v-icon>
+    </v-btn>
   </div>
 
   <ul>
@@ -49,6 +87,15 @@ export default defineComponent({
 </template>
 
 <style scoped>
+
+.form-new-user {
+  display: flex;
+  gap: .625rem;
+}
+input {
+  border: 2px slateblue solid;
+  border-radius: 5px;
+}
 .header {
   display: flex;
   align-items: center;
