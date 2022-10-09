@@ -80,9 +80,10 @@ $ npm run dev
 ````
 
 ## :art: Layout
+![Screencast 2022-10-09 17_34_13](https://user-images.githubusercontent.com/47106171/194778701-0d20ea94-42bd-417f-98a5-b22ec3215aef.gif)
 
-
-
+### Database
+![image](https://user-images.githubusercontent.com/47106171/194778737-b8faeb9a-13cc-47de-bca2-0b85b9fcccfe.png)
 
 ---
 
