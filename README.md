@@ -58,7 +58,7 @@ $ cd backend
 # Install dependencies
 $ npm i
 
-# Run backend on port 8000 (you can change this in file .env)
+# Run backend on port 8000 (you can change this in file .env). To use your own database configs, you can edit the .env file
 $ npm start
 
 ````
