@@ -29,6 +29,14 @@ export default defineComponent({
         this.person = person;
       });
     },
+    editPerson(id, name, age) {
+      api.put(`/person/${id}`, { name, age }).then((response) => {
+        const newPerson = response.data;
+        const person = this.person.map((person) => person._id === id ? newPerson : person);
+        this.person = person;
+      });
+    },
+
     handleClickAddButton() {
       this.addField = this.addField ? false : true;
     },
@@ -63,9 +71,9 @@ export default defineComponent({
   </div>
 
   <div v-if="addField === true" class="form-new-user">
-    <label>Name</label>
+    <label>Name:</label>
     <input type="text" v-model="name" />
-    <label>Age</label>
+    <label>Age:</label>
     <input type="number" v-model="age" />
 
     <v-btn
@@ -81,13 +89,12 @@ export default defineComponent({
 
   <ul>
     <li v-for="person in person" :key="person.id">
-      <Person :person="person" :deletePerson="deletePerson" />
+      <Person :person="person" :deletePerson="deletePerson" :editPerson="editPerson" />
     </li>
   </ul>
 </template>
 
 <style scoped>
-
 .form-new-user {
   display: flex;
   gap: .625rem;
@@ -114,10 +121,5 @@ li {
   gap: .625rem;
   padding-top: 0.625rem;
 }
-.name {
-  color: red;
-}
-.age {
-  color: blue;
-}
+
 </style>
